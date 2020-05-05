@@ -192,6 +192,10 @@ def train():
         model.train()
         data, targets = get_batch(train_data, i, args, seq_len=seq_len)
 
+        if args.cuda:
+            data = data.cuda()
+            targets = targets.cuda()
+
         # Starting each batch, we detach the hidden state from how it was previously produced.
         # If we didn't, the model would try backpropagating all the way to start of the dataset.
         hidden = repackage_hidden(hidden)
