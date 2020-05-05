@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import json
 
 from embed_regularize import embedded_dropout
 from locked_dropout import LockedDropout
@@ -15,6 +16,21 @@ class RNNModel(nn.Module):
         self.hdrop = nn.Dropout(dropouth)
         self.drop = nn.Dropout(dropout)
         self.encoder = nn.Embedding(ntoken, ninp)
+
+        self.opt = {
+            'rnn_type': rnn_type,
+            'ntoken': ntoken,
+            'ninp': ninp,
+            'nhid': nhid,
+            'nlayers': nlayers,
+            'dropout': dropout,
+            'dropouth': dropouth,
+            'dropouti': dropouti,
+            'dropoute': dropoute,
+            'wdrop': wdrop,
+            'tie_weights': tie_weights
+        }
+
         assert rnn_type in ['LSTM', 'QRNN', 'GRU'], 'RNN type is not supported'
         if rnn_type == 'LSTM':
             self.rnns = [torch.nn.LSTM(ninp if l == 0 else nhid, nhid if l != nlayers - 1 else (ninp if tie_weights else nhid), 1, dropout=0) for l in range(nlayers)]

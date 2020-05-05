@@ -4,6 +4,7 @@ import math
 import numpy as np
 import torch
 import torch.nn as nn
+import json
 
 import data
 import model
@@ -84,12 +85,16 @@ if torch.cuda.is_available():
 # Load data
 ###############################################################################
 
-def model_save(fn):
-    with open(fn, 'wb') as f:
-        torch.save([model, criterion, optimizer], f)
+def model_save(prefix):
+    with open(prefix+'.model', 'wb') as f:
+        torch.save([model.state_dict(), criterion, optimizer], f)
+    with open(prefix+'.opt', 'w') as f:
+        json.dump(model.opt, f)
 
 def model_load(fn):
     global model, criterion, optimizer
+    model_opt = json.load(fn + '.opt')
+    model = model.RNNModel(model_opt['rnn_type'], model_opt['ntoken'], model_opt['ninp'], model_opt['nhid'], model_opt['nlayers'], model_opt['dropout'], model_opt['dropouth'], model_opt['dropouti'], model_opt['dropoute'], model_opt['wdrop'], model_opt['tie_weights'])
     with open(fn, 'rb') as f:
         model, criterion, optimizer = torch.load(f)
 
@@ -152,6 +157,11 @@ params = list(model.parameters()) + list(criterion.parameters())
 total_params = sum(x.size()[0] * x.size()[1] if len(x.size()) > 1 else x.size()[0] for x in params if x.size())
 print('Args:', args)
 print('Model total parameters:', total_params)
+
+if args.cuda and torch.cuda.device_count() > 1:
+    print("Using %d GPUSs for training" % torch.cuda.device_count())
+    model = nn.DataParallel(model)
+    model = model.cuda()
 
 ###############################################################################
 # Training code
