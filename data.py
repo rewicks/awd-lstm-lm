@@ -1,15 +1,25 @@
 import os
 import torch
+import json
 
 from collections import Counter
 
 
 class Dictionary(object):
-    def __init__(self):
-        self.word2idx = {}
-        self.idx2word = []
-        self.counter = Counter()
-        self.total = 0
+    def __init__(self, vocab_path=None):
+        if vocab_path is not None:
+            with open(vocab_path) as vocabfile:
+                self.word2idx = json.load(vocabfile)
+            self.idx2word = ['' for x in range(len(self.word2idx))]
+            for word in self.word2idx:
+                self.idx2word[self.word2idx[word]] = word
+            self.total = 0
+            self.counter = Counter() 
+        else:
+            self.word2idx = {}
+            self.idx2word = []
+            self.counter = Counter()
+            self.total = 0
 
     def add_word(self, word):
         if word not in self.word2idx:
@@ -25,8 +35,8 @@ class Dictionary(object):
 
 
 class Corpus(object):
-    def __init__(self, path):
-        self.dictionary = Dictionary()
+    def __init__(self, path, vocab_file=None):
+        self.dictionary = Dictionary(vocab_file)
         self.train = self.tokenize(os.path.join(path, 'train.txt'))
         self.valid = self.tokenize(os.path.join(path, 'valid.txt'))
         self.test = self.tokenize(os.path.join(path, 'test.txt'))
@@ -38,7 +48,7 @@ class Corpus(object):
         with open(path, 'r') as f:
             tokens = 0
             for line in f:
-                words = line.split() + ['<eos>']
+                words = line.split() + ['</s>']
                 tokens += len(words)
                 for word in words:
                     self.dictionary.add_word(word)
@@ -48,7 +58,7 @@ class Corpus(object):
             ids = torch.LongTensor(tokens)
             token = 0
             for line in f:
-                words = line.split() + ['<eos>']
+                words = line.split() + ['</s>']
                 for word in words:
                     ids[token] = self.dictionary.word2idx[word]
                     token += 1

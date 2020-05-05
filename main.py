@@ -64,6 +64,10 @@ parser.add_argument('--optimizer', type=str,  default='sgd',
                     help='optimizer to use (sgd, adam)')
 parser.add_argument('--when', nargs="+", type=int, default=[-1],
                     help='When (which epochs) to divide the learning rate by 10 - accepts multiple')
+
+parser.add_argument('--vocab_path', type=str, default=None,
+                    help='Path to json vocab path')
+
 args = parser.parse_args()
 args.tied = True
 
@@ -97,7 +101,7 @@ if os.path.exists(fn):
     corpus = torch.load(fn)
 else:
     print('Producing dataset...')
-    corpus = data.Corpus(args.data)
+    corpus = data.Corpus(args.data, vocab_file=args.vocab_path)
     torch.save(corpus, fn)
 
 eval_batch_size = 10

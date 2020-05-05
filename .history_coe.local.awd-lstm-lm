@@ -1,0 +1,15 @@
+2020 May 05 Tue 05:55:49 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1011  cd awd-lstm-lm/
+2020 May 05 Tue 05:55:49 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1012  ls
+2020 May 05 Tue 06:07:45 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1023  cd awd-lstm-lm/
+2020 May 05 Tue 06:07:45 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1024  ls
+2020 May 05 Tue 06:13:56 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1069  cd ~/code/awd-lstm-lm/
+2020 May 05 Tue 06:26:40 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1134  cd ~/code/awd-lstm-lm/
+2020 May 05 Tue 06:26:41 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1135  ls
+2020 May 05 Tue 06:28:47 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1136  vim main.py 
+2020 May 05 Tue 06:32:57 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1137  vim data.py 
+2020 May 05 Tue 06:33:15 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1138  ls /exp/rwicks/models/spm/unigram/*.vocab
+2020 May 05 Tue 06:33:28 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1139  head /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.vocab 
+2020 May 05 Tue 06:34:22 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1140  vim data.py 
+2020 May 05 Tue 15:59:17 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1076  cd code/awd-lstm-lm/
+2020 May 05 Tue 15:59:17 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1077  ls
+2020 May 05 Tue 15:59:37 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1078  vim .gitignore
