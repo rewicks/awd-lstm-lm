@@ -9,7 +9,11 @@ import json
 import data
 import model
 
+import warnings
+warnings.filterwarnings('ignore')
+
 from utils import batchify, get_batch, repackage_hidden
+
 
 parser = argparse.ArgumentParser(description='PyTorch PennTreeBank RNN/LSTM Language Model')
 parser.add_argument('--data', type=str, default='data/penn/',
@@ -68,9 +72,14 @@ parser.add_argument('--when', nargs="+", type=int, default=[-1],
 
 parser.add_argument('--vocab_path', type=str, default=None,
                     help='Path to json vocab path')
+parser.add_argument('--log_path', type=str, default='train.log')
 
 args = parser.parse_args()
 args.tied = True
+
+
+log_file = open(args.log_path, 'w')
+
 
 # Set the random seed manually for reproducibility.
 np.random.seed(args.seed)
@@ -78,6 +87,7 @@ torch.manual_seed(args.seed)
 if torch.cuda.is_available():
     if not args.cuda:
         print("WARNING: You have a CUDA device, so you should probably run with --cuda")
+        print("WARNING: You have a CUDA device, so you should probably run with --cuda", file=log_file)
     else:
         torch.cuda.manual_seed(args.seed)
 
@@ -93,7 +103,7 @@ def model_save(prefix):
 
 def model_load(fn):
     global model, criterion, optimizer
-    model_opt = json.load(fn + '.opt')
+    model_opt = json.load(open(fn + '.opt'))
     model = model.RNNModel(model_opt['rnn_type'], model_opt['ntoken'], model_opt['ninp'], model_opt['nhid'], model_opt['nlayers'], model_opt['dropout'], model_opt['dropouth'], model_opt['dropouti'], model_opt['dropoute'], model_opt['wdrop'], model_opt['tie_weights'])
     with open(fn, 'rb') as f:
         model, criterion, optimizer = torch.load(f)
@@ -103,9 +113,11 @@ import hashlib
 fn = 'corpus.{}.data'.format(hashlib.md5(args.data.encode()).hexdigest())
 if os.path.exists(fn):
     print('Loading cached dataset...')
+    print('Loading cached dataset...', file=log_file)
     corpus = torch.load(fn)
 else:
     print('Producing dataset...')
+    print('Producing dataset...', file=log_file)
     corpus = data.Corpus(args.data, vocab_file=args.vocab_path)
     torch.save(corpus, fn)
 
@@ -127,6 +139,7 @@ model = model.RNNModel(args.model, ntokens, args.emsize, args.nhid, args.nlayers
 ###
 if args.resume:
     print('Resuming model ...')
+    print('Resuming model ...', file=log_file)
     model_load(args.resume)
     optimizer.param_groups[0]['lr'] = args.lr
     model.dropouti, model.dropouth, model.dropout, args.dropoute = args.dropouti, args.dropouth, args.dropout, args.dropoute
@@ -147,6 +160,7 @@ if not criterion:
         # WikiText-103
         splits = [2800, 20000, 76000]
     print('Using', splits)
+    print(f'Using {splits}', file=log_file)
     criterion = SplitCrossEntropyLoss(args.emsize, splits=splits, verbose=False)
 ###
 params = list(model.parameters()) + list(criterion.parameters())
@@ -154,9 +168,10 @@ total_params = sum(x.size()[0] * x.size()[1] if len(x.size()) > 1 else x.size()[
 print('Args:', args)
 print('Model total parameters:', total_params)
 
-if args.cuda and torch.cuda.device_count() > 1:
-    print("Using %d GPUSs for training" % torch.cuda.device_count())
-    model = nn.DataParallel(model)
+print(f'Args: {args}', file=log_file)
+print(f'Model total parameters: {total_params}', file=log_file)
+
+if args.cuda:
     model = model.cuda()
     criterion = criterion.cuda()
 
@@ -173,6 +188,7 @@ def evaluate(data_source, batch_size=10):
     hidden = model.init_hidden(batch_size)
     for i in range(0, data_source.size(0) - 1, args.bptt):
         data, targets = get_batch(data_source, i, args, evaluation=True)
+
         output, hidden = model(data, hidden)
         total_loss += len(data) * criterion(model.decoder.weight, model.decoder.bias, output, targets).data
         hidden = repackage_hidden(hidden)
@@ -198,10 +214,6 @@ def train():
         optimizer.param_groups[0]['lr'] = lr2 * seq_len / args.bptt
         model.train()
         data, targets = get_batch(train_data, i, args, seq_len=seq_len)
-
-        if args.cuda:
-            data = data.cuda()
-            targets = targets.cuda()
 
         # Starting each batch, we detach the hidden state from how it was previously produced.
         # If we didn't, the model would try backpropagating all the way to start of the dataset.
@@ -231,6 +243,11 @@ def train():
                     'loss {:5.2f} | ppl {:8.2f} | bpc {:8.3f}'.format(
                 epoch, batch, len(train_data) // args.bptt, optimizer.param_groups[0]['lr'],
                 elapsed * 1000 / args.log_interval, cur_loss, math.exp(cur_loss), cur_loss / math.log(2)))
+
+            print('| epoch {:3d} | {:5d}/{:5d} batches | lr {:05.5f} | ms/batch {:5.2f} | '
+                    'loss {:5.2f} | ppl {:8.2f} | bpc {:8.3f}'.format(
+                epoch, batch, len(train_data) // args.bptt, optimizer.param_groups[0]['lr'],
+                elapsed * 1000 / args.log_interval, cur_loss, math.exp(cur_loss), cur_loss / math.log(2)), file=log_file)
             total_loss = 0
             start_time = time.time()
         ###
@@ -266,9 +283,16 @@ try:
                     epoch, (time.time() - epoch_start_time), val_loss2, math.exp(val_loss2), val_loss2 / math.log(2)))
             print('-' * 89)
 
+
+            print(f"{'-' * 89}", file=log_file)
+            print('| end of epoch {:3d} | time: {:5.2f}s | valid loss {:5.2f} | '
+                'valid ppl {:8.2f} | valid bpc {:8.3f}'.format(
+                    epoch, (time.time() - epoch_start_time), val_loss2, math.exp(val_loss2), val_loss2 / math.log(2)), file=log_file)
+            print(f"{'-' * 89}", file=log_file)
             if val_loss2 < stored_loss:
                 model_save(args.save)
                 print('Saving Averaged!')
+                print('Saving Averaged!', file=log_file)
                 stored_loss = val_loss2
 
             for prm in model.parameters():
@@ -282,19 +306,31 @@ try:
               epoch, (time.time() - epoch_start_time), val_loss, math.exp(val_loss), val_loss / math.log(2)))
             print('-' * 89)
 
+
+            print(f"{'-' * 89}", file=log_file)
+            print('| end of epoch {:3d} | time: {:5.2f}s | valid loss {:5.2f} | '
+                'valid ppl {:8.2f} | valid bpc {:8.3f}'.format(
+              epoch, (time.time() - epoch_start_time), val_loss, math.exp(val_loss), val_loss / math.log(2)), file=log_file)
+            print(f"{'-' * 89}", file=log_file)
+
+
             if val_loss < stored_loss:
                 model_save(args.save)
                 print('Saving model (new best validation)')
+                print('Saving model (new best validation)', file=log_file)
                 stored_loss = val_loss
 
             if args.optimizer == 'sgd' and 't0' not in optimizer.param_groups[0] and (len(best_val_loss)>args.nonmono and val_loss > min(best_val_loss[:-args.nonmono])):
                 print('Switching to ASGD')
+                print('Switching to ASGD', file=log_file)
                 optimizer = torch.optim.ASGD(model.parameters(), lr=args.lr, t0=0, lambd=0., weight_decay=args.wdecay)
 
             if epoch in args.when:
                 print('Saving model before learning rate decreased')
+                print('Saving model before learning rate decreased', file=log_file)
                 model_save('{}.e{}'.format(args.save, epoch))
                 print('Dividing learning rate by 10')
+                print('Dividing learning rate by 10', file=log_file)
                 optimizer.param_groups[0]['lr'] /= 10.
 
             best_val_loss.append(val_loss)
@@ -303,12 +339,21 @@ except KeyboardInterrupt:
     print('-' * 89)
     print('Exiting from training early')
 
+    print(f"{'-' * 89}", file=log_file)
+    print('Exiting from training early', file=log_file)
+
+
 # Load the best saved model.
 model_load(args.save)
 
 # Run on test data.
 test_loss = evaluate(test_data, test_batch_size)
 print('=' * 89)
-print('| End of training | test loss {:5.2f} | test ppl {:8.2f} | test bpc {:8.3f}'.format(
+print('| end of training | test loss {:5.2f} | test ppl {:8.2f} | test bpc {:8.3f}'.format(
     test_loss, math.exp(test_loss), test_loss / math.log(2)))
 print('=' * 89)
+
+print(f"{'=' * 89}", file=log_file)
+print('| end of training | test loss {:5.2f} | test ppl {:8.2f} | test bpc {:8.3f}'.format(
+    test_loss, math.exp(test_loss), test_loss / math.log(2)), file=log_file)
+print(f"{'=' * 89}", file=log_file)

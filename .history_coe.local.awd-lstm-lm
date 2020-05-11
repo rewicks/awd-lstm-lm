@@ -13,3 +13,76 @@
 2020 May 05 Tue 15:59:17 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1076  cd code/awd-lstm-lm/
 2020 May 05 Tue 15:59:17 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1077  ls
 2020 May 05 Tue 15:59:37 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1078  vim .gitignore
+2020 May 05 Tue 15:59:40 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1079  git add -A
+2020 May 05 Tue 15:59:48 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1080  git commit -m "vocabulary changes"
+2020 May 05 Tue 16:00:02 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1081  git push
+2020 May 05 Tue 16:03:51 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1082  git pull
+2020 May 05 Tue 16:48:44 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1100  cd ~/code/awd-lstm-lm/
+2020 May 05 Tue 16:48:44 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1101  ls
+2020 May 05 Tue 16:48:46 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1102  git pull
+2020 May 05 Tue 16:48:56 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1103  python -m pdb main.py \     
+2020 May 05 Tue 16:51:05 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1104  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 16:52:36 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1018  cd ~/code/awd-lstm-lm/
+2020 May 05 Tue 16:52:36 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1019  ls
+2020 May 05 Tue 16:52:41 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1020  mv corpus.6bf882f62ba3f935c3dbfa3246f57185.data corpus.0c855e0ec8df766b591e3a45e43ddedd.data
+2020 May 05 Tue 16:52:45 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1104  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 16:56:26 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1021  nvidia-smi
+2020 May 05 Tue 16:56:30 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1022  kill 148677
+2020 May 05 Tue 16:56:32 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1104  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 16:56:32 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1104  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 16:56:32 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1105  q
+2020 May 05 Tue 16:56:40 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1106  git pull
+2020 May 05 Tue 16:59:01 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1023  nvidia-smi
+2020 May 05 Tue 17:02:47 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1024  watch nvidia=smi
+2020 May 05 Tue 17:05:01 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1025  watch nvidia-smi
+2020 May 05 Tue 17:05:06 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1026  kill 150809
+2020 May 05 Tue 17:05:09 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1107  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 17:05:09 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1107  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 17:05:21 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1108  pip install torch==0.5
+2020 May 05 Tue 17:06:12 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1109  pip install torch==0.4.1
+2020 May 05 Tue 17:07:58 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1110  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 17:08:00 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1111  ls
+2020 May 05 Tue 17:13:38 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1120  cd ~/code/awd-lstm-lm/
+2020 May 05 Tue 17:13:39 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1121  ls
+2020 May 05 Tue 17:14:55 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1122  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 17:15:17 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1123  vim ~/code/awd-lstm-lm/main.py 
+2020 May 05 Tue 17:15:20 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1124  sh awd_train.sh 
+2020 May 05 Tue 17:46:52 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1154  cd ~/code/awd-lstm-lm/
+2020 May 05 Tue 17:48:41 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1155  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 17:49:51 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1155  python -m pdb main.py --batch_size 256 --data data/open-subs_news-commentary/ --dropouti 0.4 --dropouth 0.25 --seed 141 --epoch 500 --save /exp/rwicks/models/language_models/awd-lstm/news-comm_open-subs.pt --vocab_path /exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json
+2020 May 05 Tue 17:50:22 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1156  vim main.py 
+2020 May 05 Tue 17:55:15 EDT r5n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1027  watch nvidia-smi
+2020 May 05 Tue 18:50:13 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1042  cd ~/code/awd-lstm-lm/
+2020 May 05 Tue 18:50:14 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1043  ls
+2020 May 05 Tue 18:50:19 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1044  tail train.log 
+2020 May 05 Tue 19:02:59 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1044  tail train.log 
+2020 May 05 Tue 19:03:02 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1044  tail train.log 
+2020 May 05 Tue 19:10:12 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1044  tail train.log 
+2020 May 05 Tue 19:10:14 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1044  tail train.log 
+2020 May 05 Tue 19:10:16 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1045  ls
+2020 May 05 Tue 19:10:22 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1046  ls -la
+2020 May 05 Tue 19:14:56 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1047  ls
+2020 May 05 Tue 19:15:01 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1048  tail train.log 
+2020 May 05 Tue 21:48:13 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1049  ls
+2020 May 05 Tue 21:48:54 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1050  vim main.py 
+2020 May 05 Tue 22:49:40 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1001  cd code/awd-lstm-lm/
+2020 May 05 Tue 22:49:40 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1002  ls
+2020 May 05 Tue 22:49:50 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1007  cd ..
+2020 May 05 Tue 22:49:50 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1008  ls
+2020 May 05 Tue 22:50:52 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1009  sh getdata.sh 
+2020 May 05 Tue 22:50:55 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1010  ls
+2020 May 05 Tue 22:51:26 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1020  cd ..
+2020 May 05 Tue 22:51:27 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1021  ls
+2020 May 05 Tue 22:52:06 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1022  sh getdata.sh 
+2020 May 05 Tue 22:54:31 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1060  cd ..
+2020 May 05 Tue 22:54:31 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1061  ls
+2020 May 05 Tue 22:59:06 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1000  exit
+2020 May 05 Tue 23:39:30 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1051  ssh r5n02
+2020 May 06 Wed 00:55:58 EDT test3 /home/hltcoe/rwicks/code/awd-lstm-lm  1052  cd ~/code/awd-lstm-lm/
+2020 May 06 Wed 00:55:58 EDT test3 /home/hltcoe/rwicks/code/awd-lstm-lm  1053  ls
+2020 May 06 Wed 09:54:07 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1041  cd ~/code/awd-lstm-lm/
+2020 May 06 Wed 09:54:08 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1042  ls
+2020 May 06 Wed 09:58:57 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1043  vim data.py 
+2020 May 06 Wed 09:59:20 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1043  vim data.py 
+2020 May 06 Wed 09:59:22 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1044  ls
+2020 May 06 Wed 09:59:31 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1045  rm corpus.0c855e0ec8df766b591e3a45e43ddedd.data 
