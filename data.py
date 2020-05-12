@@ -64,7 +64,7 @@ class Corpus(object):
             for line in f:
                 words = line.split() + ['</s>']
                 for word in words:
-                    ids[token] = self.dictionary.word2idx[word]
+                    ids[token] = self.dictionary.word2idx.get(word, self.dictionary.word2idx['<unk>'])
                     token += 1
 
         return ids
