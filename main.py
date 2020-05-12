@@ -57,6 +57,8 @@ def batchify(args, corpus):
     if args.test_path is not None:
         test_data = batchify(corpus.test, test_batch_size, args)
 
+    return train_data, val_data, test_data
+
 ###############################################################################
 # Build the model
 ###############################################################################
@@ -105,6 +107,8 @@ def build_model(args, corpus):
     if args.cuda:
         model = model.cuda()
         criterion = criterion.cuda()
+
+    return model, criterion
 
 ###############################################################################
 # Training code
@@ -375,4 +379,14 @@ if __name__ == '__main__':
         else:
             torch.cuda.manual_seed(args.seed)
 
+
+    corpus = get_dataset(args)
+    train_data, val_data, test_data = batchify(args, corpus)
+
+    model, criterion = build_model(args, corpus)
+
+    run_epoch(args, train_data, len(corpus.dictionary), val_data, model, criterion)
+
+    if args.test is not None:
+        test(args, test_data)
 
