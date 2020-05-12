@@ -86,3 +86,20 @@
 2020 May 06 Wed 09:59:20 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1043  vim data.py 
 2020 May 06 Wed 09:59:22 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1044  ls
 2020 May 06 Wed 09:59:31 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1045  rm corpus.0c855e0ec8df766b591e3a45e43ddedd.data 
+2020 May 06 Wed 09:59:37 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1046  git add -A
+2020 May 06 Wed 09:59:44 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1047  git commit -m "corpus dictionary fix"
+2020 May 06 Wed 09:59:53 EDT r5n03 /home/hltcoe/rwicks/code/awd-lstm-lm  1048  git push
+2020 May 06 Wed 11:31:21 EDT r8n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1038  cd ~/code/awd-lstm-lm/
+2020 May 06 Wed 11:31:21 EDT r8n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1039  ls
+2020 May 06 Wed 11:31:28 EDT r8n02 /home/hltcoe/rwicks/code/awd-lstm-lm  1040  python main.py test --help
+2020 May 11 Mon 23:52:06 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1016  cd awd-lstm-lm/
+2020 May 11 Mon 23:52:06 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1017  ls
+2020 May 12 Tue 06:06:16 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1018  tmux a
+2020 May 12 Tue 07:25:52 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1049  cd ~/code/awd-lstm-lm/
+2020 May 12 Tue 07:25:53 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1050  ls
+2020 May 12 Tue 07:25:55 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1051  git pull
+2020 May 12 Tue 07:26:02 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1052  git add data.py
+2020 May 12 Tue 07:26:08 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1053  git commit -m "coe data file"
+2020 May 12 Tue 07:26:18 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1054  git pull
+2020 May 12 Tue 07:26:28 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1055  vim data.py 
+2020 May 12 Tue 08:49:06 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1099  cd ~/code/awd-lstm-lm/

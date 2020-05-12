@@ -278,7 +278,7 @@ def run_epoch(args, train_data, ntokens, val_data, model, criterion):
         print('Exiting from training early', file=log_file)
 
 
-def test(args, test_data, test_batch_size=1)
+def test(args, test_data, test_batch_size=1):
     # Load the best saved model.
     model_load(args.save)
 
@@ -336,7 +336,7 @@ if __name__ == '__main__':
                         help='random seed')
     parser.add_argument('--nonmono', type=int, default=5,
                         help='random seed')
-    parser.add_argument('--cuda', default=False,
+    parser.add_argument('--cuda', type=bool, default=False,
                         help='use CUDA')
     parser.add_argument('--log-interval', type=int, default=200, metavar='N',
                         help='report interval')
@@ -349,7 +349,7 @@ if __name__ == '__main__':
                         help='beta slowness regularization applied on RNN activiation (beta = 0 means no regularization)')
     parser.add_argument('--wdecay', type=float, default=1.2e-6,
                         help='weight decay applied to all weights')
-    parser.add_argument('--resume', action='store_true')
+    parser.add_argument('--resume', type=bool, default=False)
     parser.add_argument('--resume_path', type=str, default='')
     parser.add_argument('--optimizer', type=str, default='sgd',
                         help='optimizer to use (sgd, adam)')

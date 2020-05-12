@@ -1,0 +1,16 @@
+Loading cached dataset...
+Using []
+Args: Namespace(alpha=2, batch_size=128, beta=1, bptt=70, clip=0.25, cuda=True, data='/home/hltcoe/rwicks/code/awd-lstm-lm/data/open-subs_news-commentary/', dropout=0.4, dropoute=0.1, dropouth=0.25, dropouti=0.4, emsize=400, epochs=500, log_interval=1000, log_path='/home/hltcoe/rwicks/code/awd-lstm-lm/open-subs_news-comm-lr.001.log', lr=0.001, model='LSTM', nhid=1150, nlayers=3, nonmono=5, optimizer='adam', resume='', save='/exp/rwicks/models/language_models/awd-lstm/lr.001/news-comm_open-subs', seed=141, tied=True, vocab_path='/exp/rwicks/models/spm/unigram/news-commentary_open-subtitles.8000.json', wdecay=1.2e-06, wdrop=0.5, when=[-1])
+Model total parameters: 27141682
+| epoch   1 |  1000/138538 batches | lr 0.00100 | ms/batch 187.81 | loss  4.88 | ppl   131.99 | bpc    7.044
+| epoch   1 |  2000/138538 batches | lr 0.00100 | ms/batch 189.93 | loss  4.27 | ppl    71.18 | bpc    6.153
+| epoch   1 |  3000/138538 batches | lr 0.00100 | ms/batch 188.04 | loss  4.10 | ppl    60.48 | bpc    5.918
+| epoch   1 |  4000/138538 batches | lr 0.00100 | ms/batch 188.11 | loss  4.05 | ppl    57.63 | bpc    5.849
+| epoch   1 |  5000/138538 batches | lr 0.00100 | ms/batch 188.96 | loss  4.01 | ppl    55.04 | bpc    5.782
+| epoch   1 |  6000/138538 batches | lr 0.00100 | ms/batch 189.56 | loss  3.94 | ppl    51.38 | bpc    5.683
+| epoch   1 |  7000/138538 batches | lr 0.00100 | ms/batch 187.88 | loss  3.91 | ppl    50.01 | bpc    5.644
+| epoch   1 |  8000/138538 batches | lr 0.00100 | ms/batch 190.33 | loss  3.89 | ppl    48.69 | bpc    5.606
+| epoch   1 |  9000/138538 batches | lr 0.00100 | ms/batch 187.37 | loss  3.88 | ppl    48.49 | bpc    5.600
+| epoch   1 | 10000/138538 batches | lr 0.00100 | ms/batch 189.53 | loss  3.86 | ppl    47.43 | bpc    5.568
+-----------------------------------------------------------------------------------------
+Exiting from training early
