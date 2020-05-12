@@ -35,15 +35,18 @@ class Dictionary(object):
 
 
 class Corpus(object):
-    def __init__(self, path, vocab_file=None):
+    def __init__(self, train_path, valid_path, test_path, vocab_file=None):
         self.dictionary = Dictionary(vocab_file)
         if vocab_file is not None:
             preexist=True
         else:
             preexist=False
-        self.train = self.tokenize(os.path.join(path, 'train.txt'), preexist=preexist)
-        self.valid = self.tokenize(os.path.join(path, 'valid.txt'), preexist=preexist)
-        self.test = self.tokenize(os.path.join(path, 'test.txt'), preexist=preexist)
+        if train_path is not None:
+            self.train = self.tokenize(train_path, preexist=preexist)
+        if valid_path is not None:
+            self.valid = self.tokenize(valid_path, preexist=preexist)
+        if test_path is not None:
+            self.test = self.tokenize(test_path, preexist=preexist)
 
     def tokenize(self, path, preexist=True):
         """Tokenizes a text file."""
