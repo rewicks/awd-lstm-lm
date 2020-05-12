@@ -21,21 +21,22 @@ from utils import batchify, get_batch, repackage_hidden
 # Load data
 ###############################################################################
 
-def model_save(prefix):
+def model_save(prefix, model, criterion, optimizer):
     with open(prefix+'.model', 'wb') as f:
         torch.save([model.state_dict(), criterion, optimizer], f)
     with open(prefix+'.opt', 'w') as f:
         json.dump(model.opt, f)
 
 def model_load(fn):
-    global model, criterion, optimizer
     model_opt = json.load(open(fn + '.opt'))
     model = model.RNNModel(model_opt['rnn_type'], model_opt['ntoken'], model_opt['ninp'], model_opt['nhid'], model_opt['nlayers'], model_opt['dropout'], model_opt['dropouth'], model_opt['dropouti'], model_opt['dropoute'], model_opt['wdrop'], model_opt['tie_weights'])
     with open(fn, 'rb') as f:
         model, criterion, optimizer = torch.load(f)
+    return model, criterion, optimizer
 
 def get_dataset(args):
-    fn = 'corpus.{}.data'.format(hashlib.md5(args.data.encode()).hexdigest())
+    #fn = 'corpus.{}.data'.format(hashlib.md5(args.data.encode()).hexdigest())
+    fn = 'corpus.preprocessed'
     if os.path.exists(fn):
         print('Loading cached dataset...')
         print('Loading cached dataset...', file=log_file)
@@ -47,9 +48,12 @@ def get_dataset(args):
         torch.save(corpus, fn)
     return corpus
 
-def batchify(args, corpus):
+def batch_data(args, corpus):
     eval_batch_size = 10
     test_batch_size = 1
+    train_data = None
+    val_data = None
+    test_data = None
     if args.train_path is not None:
         train_data = batchify(corpus.train, args.batch_size, args)
     if args.valid_path is not None:
@@ -73,7 +77,7 @@ def build_model(args, corpus):
     if args.resume:
         print('Resuming model ...')
         print('Resuming model ...', file=log_file)
-        model_load(args.resume)
+        model, criterion, optimizer = model_load(args.resume_path)
         optimizer.param_groups[0]['lr'] = args.lr
         model.dropouti, model.dropouth, model.dropout, args.dropoute = args.dropouti, args.dropouth, args.dropout, args.dropoute
         if args.wdrop:
@@ -130,7 +134,7 @@ def evaluate(data_source, ntokens, batch_size=10):
     return total_loss.item() / len(data_source)
 
 
-def train(args, ntokens, train_data, model, criterion, params, epoch):
+def train(args, ntokens, train_data, model, criterion, optimizer, params, epoch):
     # Turn on training mode which enables dropout.
 
     if args.model == 'QRNN': model.reset()
@@ -208,14 +212,16 @@ def run_epoch(args, train_data, ntokens, val_data, model, criterion):
             optimizer = torch.optim.Adam(params, lr=args.lr, weight_decay=args.wdecay)
         for epoch in range(1, args.epochs+1):
             epoch_start_time = time.time()
-            train()
+            train(args, ntokens, train_data, model, criterion, optimizer, params, epoch)
             if 't0' in optimizer.param_groups[0]:
                 tmp = {}
                 for prm in model.parameters():
                     tmp[prm] = prm.data.clone()
-                    prm.data = optimizer.state[prm]['ax'].clone()
+                    if 'ax' in optimizer.state[prm]:
+                        prm.data = optimizer.state[prm]['ax'].clone()
+                        
 
-                val_loss2 = evaluate(val_data)
+                val_loss2 = evaluate(val_data, ntokens)
                 print('-' * 89)
                 print('| end of epoch {:3d} | time: {:5.2f}s | valid loss {:5.2f} | '
                     'valid ppl {:8.2f} | valid bpc {:8.3f}'.format(
@@ -229,13 +235,14 @@ def run_epoch(args, train_data, ntokens, val_data, model, criterion):
                         epoch, (time.time() - epoch_start_time), val_loss2, math.exp(val_loss2), val_loss2 / math.log(2)), file=log_file)
                 print(f"{'-' * 89}", file=log_file)
                 if val_loss2 < stored_loss:
-                    model_save(args.save)
+                    model_save(args.save, model, criterion, optimizer)
                     print('Saving Averaged!')
                     print('Saving Averaged!', file=log_file)
                     stored_loss = val_loss2
 
                 for prm in model.parameters():
-                    prm.data = tmp[prm].clone()
+                    if prm in tmp.keys():
+                        prm.data = tmp[prm].clone()
 
             else:
                 val_loss = evaluate(val_data, ntokens)
@@ -254,7 +261,7 @@ def run_epoch(args, train_data, ntokens, val_data, model, criterion):
 
 
                 if val_loss < stored_loss:
-                    model_save(args.save)
+                    model_save(args.save, model, criterion, optimizer)
                     print('Saving model (new best validation)')
                     print('Saving model (new best validation)', file=log_file)
                     stored_loss = val_loss
@@ -267,7 +274,7 @@ def run_epoch(args, train_data, ntokens, val_data, model, criterion):
                 if epoch in args.when:
                     print('Saving model before learning rate decreased')
                     print('Saving model before learning rate decreased', file=log_file)
-                    model_save('{}.e{}'.format(args.save, epoch))
+                    model_save('{}.e{}'.format(args.save, epoch), model, criterion, optimizer)
                     print('Dividing learning rate by 10')
                     print('Dividing learning rate by 10', file=log_file)
                     optimizer.param_groups[0]['lr'] /= 10.
@@ -340,7 +347,7 @@ if __name__ == '__main__':
                         help='random seed')
     parser.add_argument('--nonmono', type=int, default=5,
                         help='random seed')
-    parser.add_argument('--cuda', type=bool, default=False,
+    parser.add_argument('--cuda', action='store_true',
                         help='use CUDA')
     parser.add_argument('--log-interval', type=int, default=200, metavar='N',
                         help='report interval')
@@ -353,8 +360,8 @@ if __name__ == '__main__':
                         help='beta slowness regularization applied on RNN activiation (beta = 0 means no regularization)')
     parser.add_argument('--wdecay', type=float, default=1.2e-6,
                         help='weight decay applied to all weights')
-    parser.add_argument('--resume', type=bool, default=False)
-    parser.add_argument('--resume_path', type=str, default='')
+    parser.add_argument('--resume', action='store_true')
+    #parser.add_argument('--resume_path', type=str, default='')
     parser.add_argument('--optimizer', type=str, default='sgd',
                         help='optimizer to use (sgd, adam)')
     parser.add_argument('--when', nargs="+", type=int, default=[-1],
@@ -367,6 +374,14 @@ if __name__ == '__main__':
     args = parser.parse_args()
     args.tied = True
 
+    if args.train_path == "None":
+        args.train_path = None
+    if args.valid_path == "None":
+        args.valid_path = None
+    if args.test_path == "None":
+        args.test_path = None
+    if args.vocab_path == "None":
+        args.vocab_path = None
     log_file = open(args.log_path, 'w')
 
     # Set the random seed manually for reproducibility.
@@ -379,9 +394,9 @@ if __name__ == '__main__':
         else:
             torch.cuda.manual_seed(args.seed)
 
-
+    print(args.resume)
     corpus = get_dataset(args)
-    train_data, val_data, test_data = batchify(args, corpus)
+    train_data, val_data, test_data = batch_data(args, corpus)
 
     model, criterion = build_model(args, corpus)
 

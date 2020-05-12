@@ -16,8 +16,8 @@ class Dictionary(object):
             self.total = 0
             self.counter = Counter() 
         else:
-            self.word2idx = {}
-            self.idx2word = []
+            self.word2idx = {'<unk>':0}
+            self.idx2word = ['<unk>']
             self.counter = Counter()
             self.total = 0
 

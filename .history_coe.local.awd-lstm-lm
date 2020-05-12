@@ -103,3 +103,15 @@
 2020 May 12 Tue 07:26:18 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1054  git pull
 2020 May 12 Tue 07:26:28 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1055  vim data.py 
 2020 May 12 Tue 08:49:06 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1099  cd ~/code/awd-lstm-lm/
+2020 May 12 Tue 08:49:08 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1100  git add -A
+2020 May 12 Tue 08:49:17 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1101  git commit -m "argparse fixes"
+2020 May 12 Tue 08:54:34 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1102  git push
+2020 May 12 Tue 08:54:43 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1103  git pull
+2020 May 12 Tue 11:58:49 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1004  cd awd-lstm-lm/
+2020 May 12 Tue 11:58:49 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1005  ls
+2020 May 12 Tue 11:58:57 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1006  vim main.py 
+2020 May 12 Tue 12:04:10 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1006  vim main.py 
+2020 May 12 Tue 12:10:52 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1006  vim main.py 
+2020 May 12 Tue 12:36:40 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1006  vim main.py 
+2020 May 12 Tue 12:37:10 EDT test1 /home/hltcoe/rwicks/code/awd-lstm-lm  1006  vim main.py 
+2020 May 12 Tue 13:27:39 EDT r2n05 /home/hltcoe/rwicks/code/awd-lstm-lm  1009  cd ~/code/awd-lstm-lm/
